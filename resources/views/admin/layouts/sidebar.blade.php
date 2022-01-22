@@ -49,8 +49,8 @@
                                <span class="badge badge-danger"></span>
                            </a>
                            <div class="submenu-content">
-{{--                               <a href="{{route('appointment.create')}}" class="menu-item">Create</a>--}}
-{{--                               <a href="{{route('appointment.index')}}" class="menu-item">Check</a>--}}
+                               <a href="{{route('appointment.create')}}" class="menu-item">Create</a>
+                               <a href="{{route('appointment.index')}}" class="menu-item">Check</a>
                            </div>
                         </div>
                     @endif

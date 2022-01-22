@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
-//use App\Models\Time;
+use App\Models\Time;
 //use App\Models\Prescription;
+use Auth;
 
 class AppointmentController extends Controller
 {
@@ -16,9 +20,15 @@ class AppointmentController extends Controller
      */
     public function index()
     {
+
+        $user    = Auth::user();
+        $users   = User::where('role_id', 3);
+        $doctors = User::where('role_id',1);
+        $role    = Role::count();
+        $department_count  = Department::count();
         $myappointments = Appointment::latest()->where('user_id',auth()->user()->id)->get();
 
-        return view('admin.appointment.index',compact('myappointments'));
+        return view('admin.appointment.index', compact('myappointments', 'user'));
 
     }
 
@@ -29,7 +39,69 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return view('admin.appointment.create');
+
+        $arrayAM = [
+            "6am", "6.20am", "6.40am",
+            "7am", "7.20am", "7.40am",
+            "8am", "8.20am", "8.40am",
+            "9am", "9.20am", "9.40am",
+            "10am", "10.20am", "10.40am",
+            "11am", "11.20am", "11.40am",
+            "12am", "12.20am", "12.40am",
+        ];
+
+        $arrayPM = [
+            "12pm", "12.20pm", "12.40pm",
+            "1pm", "1.20pm", "1.40pm",
+            "2pm", "2.20pm", "2.40pm",
+            "3pm", "3.20pm", "3.40pm",
+            "4pm", "4.20pm", "4.40pm",
+            "5pm", "5.20pm", "5.40pm",
+            "6pm", "6.20pm", "6.40pm",
+            "7pm", "7.20pm", "7.40pm",
+            "8pm", "8.20pm", "8.40pm",
+            "9pm", "9.20pm", "9.40pm",
+        ];
+
+        $amHtml = $this->generating_appointment_html( 3, $arrayAM );
+        $pmHtml = $this->generating_appointment_html( 3, $arrayPM );
+
+        $user    = Auth::user();
+        $users   = User::where('role_id', 3);
+        $doctors = User::where('role_id',1);
+        $role    = Role::count();
+        $department_count  = Department::count();
+
+        return view('admin.appointment.create', compact('users', 'user', 'amHtml', 'pmHtml' ) );
+    }
+
+
+    /**
+     * Function generating html for appointments settings
+     *
+     * @param int $count
+     * @param array $array
+     * @param int $type
+     * @return string
+     */
+    public function generating_appointment_html( $count = 3, $array = [] ) {
+
+        $arrayDivided = array_chunk( $array, $count );
+
+        $html = '';
+
+        foreach ( $arrayDivided as $k => $v ) {
+
+            $html .= '<tr>';
+            $html .= '<th scope="row">' .  ($k+1) . '</th>';
+            foreach ( $v as $k1 => $time ) {
+                $html .=  '<td><input type="checkbox" class="time_input" name="time[]" id="'. $time . '" value="'. $time . '"><label for="'. $time . '" >'. $time . '</label></td>';
+            }
+            $html .= '</tr>';
+        }
+
+        return $html;
+
     }
 
     /**
@@ -41,21 +113,25 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'date'=>'required|unique:appointments,date,NULL,id,user_id,'.\Auth::id(),
-            'time'=>'required'
+            'date' => 'required|unique:appointments,date,NULL,id,user_id,'.\Auth::id(),
+            'time' => 'required'
         ]);
+
         $appointment = Appointment::create([
-            'user_id'=> auth()->user()->id,
-            'date' => $request->date
+            'user_id' => auth()->user()->id,
+            'date'    => $request->date
         ]);
-        foreach($request->time as $time){
+
+        foreach( $request->time as $time ){
             Time::create([
-                'appointment_id'=> $appointment->id,
-                'time'=> $time,
+                'appointment_id' => $appointment->id,
+                'time'           => $time,
                 //'stauts'=>0
             ]);
         }
-        return redirect()->back()->with('message','Appointment created for'. $request->date);
+
+
+        return redirect()->back()->with('message', 'Appointment was created for '. $request->date);
 
     }
 
