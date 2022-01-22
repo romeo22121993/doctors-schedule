@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\DepartmentSeeder;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 
@@ -13,9 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name'=>'doctor']);
-        Role::create(['name'=>'admin']);
-        Role::create(['name'=>'patient']);
+//        Role::create(['name'=>'doctor']);
+//        Role::create(['name'=>'admin']);
+//        Role::create(['name'=>'patient']);
         // $this->call(UserSeeder::class);
+//        $this->call(DepartmentSeeder::class);
     }
 }

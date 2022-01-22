@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('title')
+    All Doctors
+@endsection
+
 @section('content')
 
 <div class="page-header">
@@ -9,7 +13,7 @@
             <i class="ik ik-inbox bg-blue"></i>
             <div class="d-inline">
                 <h5>Doctors</h5>
-                <span>list of all doctors</span>
+                <span>List of All Doctors</span>
             </div>
         </div>
     </div>
@@ -17,7 +21,7 @@
         <nav class="breadcrumb-container" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="../index.html"><i class="ik ik-home"></i></a>
+                    <a href="/"><i class="ik ik-home"></i></a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="#">Doctors</a>
@@ -38,8 +42,11 @@
             </div>
         @endif
     <div class="card">
-        <div class="card-header"><h3>Data Table</h3>
-
+        <div class="card-header">
+            <a href="{{ route('doctor.create') }}">Create new Doctor/Admin</a>
+        </div>
+        <div class="card-header">
+            <h3>Data Table</h3>
         </div>
         <div class="card-body">
             <table id="data_table" class="table">
@@ -57,44 +64,39 @@
                 </thead>
                 <tbody>
                     @if(count($users)>0)
-                    @foreach($users as $user)
-                    <tr>
-                        <td>{{$user->name}}</td>
-                        <td><img src="{{asset('images')}}/{{$user->image}}" class="table-user-thumb" alt=""></td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->address}}</td>
-                        <td>{{$user->phone_number}}</td>
-                        <td>{{$user->department}}</td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" data-toggle="modal" data-target="#exampleModal{{$user->id}}">
-                                <i class="ik ik-eye"></i>
-                                </a>
-                                <a href="{{route('doctor.edit',[$user->id])}}"><i class="ik ik-edit-2"></i></a>
-                                
-                                <a href="{{route('doctor.show',[$user->id])}}">
-                                    <i class="ik ik-trash-2"></i>
-                                </a>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{$user->name}}</td>
+                                <td><img src="{{asset('/images')}}/{{$user->image}}" class="table-user-thumb" alt=""></td>
+                                <td>{{$user->email}}</td>
+                                <td>{{$user->address}}</td>
+                                <td>{{$user->phone_number}}</td>
+                                <td>{{$user->department}}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="#" data-toggle="modal" data-target="#exampleModal{{$user->id}}">
+                                        <i class="ik ik-eye"></i>
+                                        </a>
+                                        <a href="{{route('doctor.edit', [$user->id])}}"><i class="ik ik-edit-2"></i></a>
 
-                            </div>
-                        </td>
-                        <td>x</td>
+                                        <a href="{{route('doctor.show', [$user->id])}}">
+                                            <i class="ik ik-trash-2"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>x</td>
+                            </tr>
 
-                    </tr>
-           
-                    <!-- View Modal -->
-                    @include('admin.doctor.model')
-
-
-
-                    @endforeach
-                   
-                    @else 
-                    <td>No user to display</td>
+                            <!-- View Modal -->
+                            @include('admin.doctor.model')
+                        @endforeach
+                    @else
+                        <td>No user to display</td>
                     @endif
-                
+
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>

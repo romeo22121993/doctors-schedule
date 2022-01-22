@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -39,4 +40,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Function connecting to role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function role(){
+        return $this->hasOne('App\Models\Role','id','role_id');
+    }
+
+    /**
+     * Function connecting to avatar
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function userAvatar( $request, $userId ){
+        $image = $request->file('image');
+        $extension = $image->extension();
+        $name  = $image->hashName();
+        $name  = "$userId.$extension";
+
+        $destination = public_path('/images');
+        $image->move( $destination, $name );
+
+        return $name;
+    }
+
 }
