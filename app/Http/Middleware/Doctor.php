@@ -20,5 +20,7 @@ class Doctor
         if ( Auth::user()->role->name == 'doctor') {
             return $next($request);
         }
+        abort(403);
+
     }
 }

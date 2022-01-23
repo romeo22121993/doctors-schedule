@@ -33,7 +33,7 @@ Route::group(['middleware'=>['auth', 'admin']],function(){
 });
 
 
-Route::group(['middleware'=>['auth','patient']],function(){
+Route::group(['middleware'=>['auth', 'patient']],function(){
 //    Route::post('/book/appointment','FrontendController@store')->name('booking.appointment');
 //    Route::get('/my-booking','FrontendController@myBookings')->name('my.booking');
 //    Route::get('/user-profile','ProfileController@index');
@@ -43,11 +43,11 @@ Route::group(['middleware'=>['auth','patient']],function(){
 });
 
 
-Route::group(['middleware'=>['auth','doctor']],function(){
+Route::group(['middleware'=> ['auth', 'doctor']], function(){
 
     Route::resource('appointment','AppointmentController');
     Route::post('/appointment/check','AppointmentController@check')->name('appointment.check');
-    Route::post('/appointment/update','AppointmentController@updateTime')->name('update');
+    Route::post('/appointment/update','AppointmentController@updateTime')->name('appointment.update');
     /*
     Route::get('patient-today','PrescriptionController@index')->name('patients.today');
 

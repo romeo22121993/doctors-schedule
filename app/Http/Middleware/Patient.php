@@ -16,6 +16,9 @@ class Patient
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if ( Auth::user()->role->name == 'patient') {
+            return $next($request);
+        }
+        abort(403);
     }
 }
