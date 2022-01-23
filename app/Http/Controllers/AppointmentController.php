@@ -236,4 +236,21 @@ class AppointmentController extends Controller
         return redirect()->route('appointment.index')->with('message', 'Appointment time is updated!!');
     }
 
+    /**
+     * Function API getting all avalliable booking for current month
+     *
+     * @return mixed
+     */
+    public function distinctDates( ) {
+        $currentMonth = Date('m');
+        $currentYear  = Date('Y');
+        $currentDay   = Date('Y-m-d');
+
+        $currentMonth = $currentYear . '-' . $currentMonth . '-';
+
+        $appointments = Appointment::distinct()->where('date', 'LIKE',  "$currentMonth%")->where('date', '>=', $currentDay)->orderBy('date', 'asc')->get(['date']);
+
+        return $appointments;
+    }
+
 }

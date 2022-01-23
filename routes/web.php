@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,18 @@ use App\Http\Controllers\DoctorController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
+Route::get('/','FrontendController@index');
 Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard','DashboardController@index');
+
+Route::get('/new-appointment/{doctorId}/{date}','FrontendController@show')->name('create.appointment');
 
 Route::group(['middleware'=>['auth', 'admin']],function(){
     Route::resource('doctor', 'DoctorController');
@@ -34,7 +39,7 @@ Route::group(['middleware'=>['auth', 'admin']],function(){
 
 
 Route::group(['middleware'=>['auth', 'patient']],function(){
-//    Route::post('/book/appointment','FrontendController@store')->name('booking.appointment');
+    Route::post('/book/appointment','FrontendController@store')->name('booking.appointment');
 //    Route::get('/my-booking','FrontendController@myBookings')->name('my.booking');
 //    Route::get('/user-profile','ProfileController@index');
 //    Route::post('/user-profile','ProfileController@store')->name('profile.store');
@@ -50,10 +55,13 @@ Route::group(['middleware'=> ['auth', 'doctor']], function(){
     Route::post('/appointment/update','AppointmentController@updateTime')->name('appointment.update');
     /*
     Route::get('patient-today','PrescriptionController@index')->name('patients.today');
-
     Route::post('/prescription','PrescriptionController@store')->name('prescription');
     Route::get('/prescription/{userId}/{date}','PrescriptionController@show')->name('prescription.show');
     Route::get('/prescribed-patients','PrescriptionController@patientsFromPrescription')->name('prescribed.patients');
     */
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
