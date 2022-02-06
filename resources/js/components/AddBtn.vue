@@ -4,10 +4,8 @@
 			<input type="text" name="medicine[]" class="form-control">
 			<span>
 				<a href="" @click.prevent="add(index)" v-show="index== inputs.length-1" style="color: green;">Add More Medicine</a>
-
 				<a href="" @click.prevent="remove(index)" v-show="index ||(!index &&inputs.length >1) ">Remove</a>
 			</span>
-			
 		</div>
 	</div>
 </template>

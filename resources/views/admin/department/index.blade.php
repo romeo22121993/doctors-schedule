@@ -17,7 +17,7 @@
         <nav class="breadcrumb-container" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="../index.html"><i class="ik ik-home"></i></a>
+                    <a href="/"><i class="ik ik-home"></i></a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="#">Department</a>
@@ -47,7 +47,7 @@
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
-                        
+
                         <th class="nosort">&nbsp;</th>
                         <th class="nosort">&nbsp;</th>
                     </tr>
@@ -58,35 +58,25 @@
                     <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$department->department}}</td>
-                        
+
                         <td>
                             <div class="table-actions">
-                                
-                                <a href="{{route('department.edit',[$department->id])}}"><i class="ik ik-edit-2"></i></a>
-                                
-                                
-                                <form action="{{route('department.destroy',[$department->id])}}" method="post">@csrf
+                                <a href="{{route('department.edit', [$department->id])}}"><i class="ik ik-edit-2"></i></a>
+                                <form action="{{route('department.destroy',[$department->id])}}" method="post">
+                                    @csrf
                                     @method('DELETE')
                                     <button type="submit"><i class="ik ik-trash-2"></i></button>
-                                    
                                 </form>
-
                             </div>
                         </td>
                         <td>x</td>
-
                     </tr>
-           
-                  
-
-
-
                     @endforeach
-                   
-                    @else 
+
+                    @else
                     <td>No departments to display</td>
                     @endif
-                
+
                 </tbody>
             </table>
         </div>

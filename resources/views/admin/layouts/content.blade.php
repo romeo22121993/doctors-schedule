@@ -84,7 +84,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="state">
                                 <h6>Prescription</h6>
-{{--                                <h2>{{App\Prescription::count()}}</h2>--}}
+                                <h2>{{App\Models\Prescription::count()}}</h2>
                             </div>
                             <div class="icon">
                                 <i class="ik ik-align-justify"></i>

@@ -7,7 +7,7 @@ use App\Models\Appointment;
 use App\Models\Time;
 use App\Models\User;
 use App\Models\Booking;
-//use App\Models\Prescription;
+use App\Models\Prescription;
 use App\Mail\AppointmentMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -145,9 +145,13 @@ class FrontendController extends Controller
     public function myBookings()
     {
         $appointments = Booking::latest()->where('user_id',auth()->user()->id)->get();
+
         return view('booking.index',compact('appointments'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function myPrescription()
     {
         $prescriptions = Prescription::where('user_id',auth()->user()->id)->get();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
@@ -14,8 +15,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $departments = Department::get();
-        return view('admin.department.index',compact('departments'));
+        return view('admin.department.index',compact('departments', 'user'));
     }
 
     /**
@@ -25,7 +27,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.department.create');
+        $user = Auth::user();
+        return view('admin.department.create', compact( 'user'));
     }
 
     /**
@@ -62,8 +65,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $department = Department::find($id);
-        return view('admin.department.edit',compact('department'));
+        return view('admin.department.edit',compact('department', 'user'));
     }
 
     /**

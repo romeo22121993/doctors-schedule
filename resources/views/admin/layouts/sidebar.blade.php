@@ -62,8 +62,8 @@
                                 <span>Patients</span> <span class="badge badge-danger"></span>
                             </a>
                             <div class="submenu-content">
-{{--                                <a href="{{route('patients.today')}}" class="menu-item">Patients(today)</a>--}}
-{{--                                <a href="{{route('prescribed.patients')}}" class="menu-item">All patients(prescription)</a>--}}
+                                <a href="{{route('patients.today')}}" class="menu-item">Patients(today)</a>
+                                <a href="{{route('prescribed.patients')}}" class="menu-item">All patients(prescription)</a>
                             </div>
                         </div>
                     @endif
@@ -75,8 +75,8 @@
                                 <span>Patient Appointment</span> <span class="badge badge-danger"></span>
                             </a>
                             <div class="submenu-content">
-{{--                                <a href="{{route('patient')}}" class="menu-item">Today Appointment</a>--}}
-{{--                                <a href="{{route('all.appointments')}}" class="menu-item">All Time Appointment</a>--}}
+                                <a href="{{route('patients')}}" class="menu-item">Today Appointment</a>
+                                <a href="{{route('patients.all')}}" class="menu-item">All Time Appointment</a>
                             </div>
                         </div>
                     @endif
